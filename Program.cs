@@ -8,7 +8,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// Depedency Injection
+// Dependency Injection
 builder.Services.AddScoped<IConceptService, ConceptService>();
 
 var app = builder.Build();

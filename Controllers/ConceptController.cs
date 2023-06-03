@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Concepts.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("begrep")]
 public class ConceptController : ControllerBase
 {
     private readonly IConceptService service;
@@ -15,9 +15,28 @@ public class ConceptController : ControllerBase
         this.service = service;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<Concept> Get()
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Concept>>> Get()
     {
-        return this.service.GetAllConcepts().ToArray();
+        var result = await this.service.GetAllConcepts();
+        if (result.Success)
+        {
+            return new ActionResult<IEnumerable<Concept>>(result.Concepts);
+        }
+
+        return BadRequest();
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Concept>> GetConcept(string id)
+    {
+        var result = await this.service.GetConceptById(id);
+        if (result.Success)
+        {
+            return result.Concept;
+        }
+
+        return BadRequest();
+    }
+    
 }

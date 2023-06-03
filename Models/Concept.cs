@@ -11,6 +11,6 @@ public class Concept
     public class ConceptDefinition
     {
         public string Tekst { get; set; }
-        public DateOnly LastUpdated { get; set; }
+        public DateTime? LastUpdated { get; set; }
     }
 }
