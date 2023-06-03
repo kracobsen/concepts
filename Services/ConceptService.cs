@@ -28,7 +28,18 @@ public class ConceptService : IConceptService
         while (!lastPage)
         {
             var request = new RestRequest("concepts").AddJsonBody(new { page = currentPage });
-            var result = await client.PostAsync<ConceptSearchResult>(request);
+            ConceptSearchResult result = null;
+            try
+            { 
+                result = await client.PostAsync<ConceptSearchResult>(request);
+            }
+            catch (Exception e)
+            {
+                return new ConceptServiceSearchResult()
+                {
+                    Success = false
+                };
+            }
 
             foreach (var conceptResult in result.Hits)
             {
